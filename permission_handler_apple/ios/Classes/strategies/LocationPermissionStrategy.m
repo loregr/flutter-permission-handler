@@ -83,11 +83,6 @@ NSString *const UserDefaultPermissionRequestedKey = @"org.baseflow.permission_ha
 #endif
     } else if (permission == PermissionGroupLocationAlways) {
 #if PERMISSION_LOCATION
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-            errorHandler(@"MISSING_WHENINUSE_PERMISSION", @"Must have \"When in use\" permission before it is allowed to request \"Always\" permission.");
-            return;
-        }
-        
         if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"] != nil || [[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysAndWhenInUseUsageDescription"] != nil ) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveActivityNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
             [_locationManager requestAlwaysAuthorization];
@@ -181,7 +176,6 @@ NSString *const UserDefaultPermissionRequestedKey = @"org.baseflow.permission_ha
             case kCLAuthorizationStatusRestricted:
                 return PermissionStatusRestricted;
             case kCLAuthorizationStatusAuthorizedWhenInUse:
-                return PermissionStatusDenied;
             case kCLAuthorizationStatusDenied:
                 return PermissionStatusPermanentlyDenied;
             case kCLAuthorizationStatusAuthorizedAlways:
