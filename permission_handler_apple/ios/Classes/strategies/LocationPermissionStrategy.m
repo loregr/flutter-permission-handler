@@ -181,6 +181,7 @@ NSString *const UserDefaultPermissionRequestedKey = @"org.baseflow.permission_ha
             case kCLAuthorizationStatusRestricted:
                 return PermissionStatusRestricted;
             case kCLAuthorizationStatusAuthorizedWhenInUse:
+                return PermissionStatusDenied;
             case kCLAuthorizationStatusDenied:
                 return PermissionStatusPermanentlyDenied;
             case kCLAuthorizationStatusAuthorizedAlways:
